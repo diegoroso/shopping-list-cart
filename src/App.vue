@@ -1,11 +1,9 @@
 <template>
     <v-app>
         <main>
-            <v-content>
-                <v-container fluid>
-                    <router-view></router-view>
-                </v-container>
-            </v-content>
+            <v-container fluid>
+                <router-view></router-view>
+            </v-container>
         </main>
     </v-app>
 </template>

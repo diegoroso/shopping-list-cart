@@ -5,8 +5,22 @@
 </template>
 
 <script>
+    import Products from '_services/products.js'
+
     export default {
-        name: 'HomePage'
+        name: 'HomePage',
+
+        data () {
+            return {
+                products: []
+            }
+        },
+
+        mounted () {
+            return Products.getProducts().then(prod => {
+                console.log(prod)
+            })
+        }
     }
 </script>
 
