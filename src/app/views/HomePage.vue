@@ -3,18 +3,21 @@
         <product v-for="(product, i) in products" :key="i"
             :product="product"
         ></product>
+        <product-details></product-details>
     </div>
 </template>
 
 <script>
     import Product from '_components/Product.vue'
+    import ProductDetails from '_components/ProductDetails.vue'
     import ProductsService from '_services/products.js'
 
     export default {
         name: 'HomePage',
 
         components: {
-            Product
+            Product,
+            ProductDetails
         },
 
         data () {

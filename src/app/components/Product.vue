@@ -9,6 +9,7 @@
             {{ product.currencyFormat }} <span>{{ price_coin }}</span>,{{ price_cents }}
         </p>
         <p class="product__installments" v-text="`ou ${product.installments} x ${product.currencyFormat} ${price_installments}`"></p>
+        <button type="button" @click="setProduct(product)" class="btn product__btn" data-toggle="modal" data-target=".bd-example-modal-lg">Comprar</button>
     </div>
 </template>
 
@@ -38,6 +39,12 @@
                 const number = this.product.price / this.product.installments
                 return number.toFixed(2)
             }
+        },
+
+        methods: {
+            setProduct (product) {
+                this.$store.dispatch('setProductDetails', product)
+            }
         }
     }
 </script>
@@ -57,8 +64,18 @@
         }
 
         &__title {
+            height: 42px;
             margin: 15px 0;
+            display: flex;
             font-size: 14px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &__btn {
+            color: #FFF;
+            cursor: pointer;
+            background-color: #592d82;
         }
     }
 </style>
