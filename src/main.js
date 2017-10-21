@@ -1,4 +1,3 @@
-import '_npm/bootstrap/scss/bootstrap.scss'
 import '_sass/main.scss'
 import Vue from 'vue'
 
