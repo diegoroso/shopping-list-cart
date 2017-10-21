@@ -1,14 +1,21 @@
 <template>
-    <div>
-        <p>NETSHOES</p>
+    <div class="products_container row">
+        <product v-for="(product, i) in products" :key="i"
+            :product="product"
+        ></product>
     </div>
 </template>
 
 <script>
-    import Products from '_services/products.js'
+    import Product from '_components/Product.vue'
+    import ProductsService from '_services/products.js'
 
     export default {
         name: 'HomePage',
+
+        components: {
+            Product
+        },
 
         data () {
             return {
@@ -17,11 +24,15 @@
         },
 
         mounted () {
-            return Products.getProducts().then(prod => {
-                console.log(prod)
+            return ProductsService.getProducts().then(products => {
+                this.products = products.data.products
             })
         }
     }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+    .products_container {
+        margin-bottom: 55px;
+    }
+</style>
