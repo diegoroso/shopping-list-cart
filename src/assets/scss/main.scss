@@ -1,1 +1,10 @@
 @import '~_npm/bootstrap/scss/bootstrap.scss';
+@import '~_sass/config/vars';
+
+body {
+    font-family: $font-default;
+
+    &.overflow-hidden {
+        overflow: hidden;
+    }
+}

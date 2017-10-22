@@ -36,6 +36,6 @@
 
 <style lang="scss" scoped>
     .products_container {
-        margin-bottom: 55px;
+        padding-bottom: 55px;
     }
 </style>

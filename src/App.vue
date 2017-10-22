@@ -4,8 +4,10 @@
             <img :src="`${require('_img/logo.png')}`" alt="Netshoes">
             <cart-drawer></cart-drawer>
         </nav>
-        <div class="container">
-            <router-view></router-view>
+        <div class="main-body">
+            <div class="container">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
@@ -23,15 +25,19 @@
 </script>
 
 <style lang="scss">
-    @import '~_sass/includes/vars';
+    @import '~_sass/config/vars';
 
     .navbar {
         height: 60px;
-        position: relative;
+        position: fixed;
         background-color: $primary-color;
 
         img {
             height: 100%;
         }
+    }
+
+    .main-body {
+        padding-top: 60px;
     }
 </style>

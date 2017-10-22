@@ -4,11 +4,13 @@ export default {
     },
     mutations: {
         setCart (state, data) {
-            state.products = data
+            const cart = state.products
+            cart.push(data)
+            state.products = cart
         }
     },
     actions: {
-        setProductsCart ({ commit }, data) {
+        setProductCart ({ commit }, data) {
             commit('setCart', data)
         }
     }

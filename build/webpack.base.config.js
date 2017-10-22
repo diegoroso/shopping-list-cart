@@ -31,11 +31,13 @@ module.exports = {
             _sass: path.join(src, 'assets', 'scss'),
             _store: path.join(src, 'store'),
             _views: path.join(app, 'views'),
+            _mixins: path.join(app, 'mixins'),
             _config: path.join(__dirname, '..', 'config'),
             _services: path.join(src, 'services'),
             _components: path.join(app, 'components')
         }
     },
+
     module: {
         rules: [
             {
