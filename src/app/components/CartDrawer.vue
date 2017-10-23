@@ -13,27 +13,27 @@
                 <span v-if="products.length > 0">Sacola</span>
                 <span v-else>Sacola Vazia</span>
             </div>
-            <div :class="`prod-${product.id} cart-drawer__content__product`" v-for="(product, i) in products" :key="i">
+            <div :class="`prod-${product.id}-${product.size} cart-drawer__content__product`" v-for="(product, i) in products" :key="i">
                 <div class="cart-drawer__content__product__content product-content">
                     <div class="product-content__image" :style="`background-image: url(${product.image})`"></div>
                     <div class="product-content__description">
                         <p class="product-content__description__title" v-text="product.title"></p>
                         <p class="product-content__description__info" v-text="`${product.size} | ${product.style}`"></p>
                         <p class="product-content__description__quantity" v-text="`Quantidade: ${product.quantity}`"></p>
-                        <p class="product-content__description__price">{{ product.currencyFormat }} <span>{{ product.price_coin }}</span>,{{ product.price_cents }}</p>
+                        <p class="product-content__description__price">{{ product.currencyFormat }} <span>{{ priceCoin(product.price) }}</span>,{{ priceCents(product.price) }}</p>
                     </div>
                 </div>
-                <div class="cart-drawer__content__product__close" @mouseover="closeToggle(product)" @mouseout="closeToggle(product)"></div>
+                <div class="cart-drawer__content__product__close" @click="removeProduct(product)" @mouseover="closeEnable(product)" @mouseout="closeDisable(product)"></div>
                 <div class="product-overlay"></div>
             </div>
-            <div class="cart-drawer__content__total">
+            <div v-if="products.length > 0" class="cart-drawer__content__total">
                 <p class="cart-drawer__content__total__subtotal">Subtotal</p>
                 <div>
                     <p class="cart-drawer__content__total__price">R$ <span>{{ totalCoin }}</span>,{{ totalCents }}</p>
                     <p class="cart-drawer__content__total__installments">Ou em até 10 x R$ {{ totalInstallments }}</p>
                 </div>
             </div>
-            <button class="btn cart-drawer__content__btn">Comprar</button>
+            <button v-if="products.length > 0" class="btn cart-drawer__content__btn">Comprar</button>
         </div>
     </div>
 </template>
@@ -53,6 +53,12 @@
                 return this.$store.state.cart.products
             },
 
+            quantityCart () {
+                this.products.forEach(product => {
+
+                })
+            },
+
             totalCartPrice () {
                 let sum = 0
                 this.products.forEach(product => {
@@ -67,15 +73,15 @@
             },
 
             totalCoin () {
-                let price = this.totalCartPrice.toString()
-                price = price.split('.')
-                return price[0]
+                let cartPrice = this.totalCartPrice.toString()
+                cartPrice = cartPrice.split('.')
+                return cartPrice[0]
             },
 
             totalCents () {
-                let price = this.totalCartPrice.toString()
-                price = price.split('.')
-                return `${price[1]}`
+                let cartPrice = this.totalCartPrice.toString()
+                cartPrice = cartPrice.split('.')
+                return `${cartPrice[1]}`
             }
         },
 
@@ -99,12 +105,24 @@
             toggleCart () {
                 this.open = !this.open
             },
-            closeToggle (product) {
-                if (document.querySelector(`.prod-${product.id}.remove`)) {
-                    document.querySelector(`.prod-${product.id}`).classList.remove('remove')
-                } else {
-                    document.querySelector(`.prod-${product.id}`).classList.add('remove')
-                }
+            removeProduct (product) {
+                this.$store.dispatch('removeProductCart', product)
+            },
+            closeEnable (product) {
+                document.querySelector(`.prod-${product.id}-${product.size}`).classList.add('remove')
+            },
+            closeDisable (product) {
+                document.querySelector(`.prod-${product.id}-${product.size}`).classList.remove('remove')
+            },
+            priceCoin (price) {
+                let temp = price.toString()
+                temp = temp.split('.')
+                return temp[0]
+            },
+            priceCents (price) {
+                let temp = price.toString()
+                temp = temp.split('.')
+                return `${temp[1]}0`
             }
         },
 
@@ -224,12 +242,12 @@
                     width: 14px;
                     height: 14px;
                     cursor: pointer;
+                    z-index: 1;
                     position: absolute;
                     background-repeat: no-repeat;
                     background-image: url('~_img/close-black.png');
 
                     &:hover {
-                        z-index: 1;
                         background-image: url('~_img/close-white.png');
                     }
                 }
@@ -322,6 +340,7 @@
                 height: 50px;
                 font-size: 14px;
                 border-color: #000;
+                margin-bottom: 20px;
                 text-transform: uppercase;
                 background-color: #000;
             }

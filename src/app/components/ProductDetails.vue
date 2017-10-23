@@ -68,6 +68,7 @@
 
         watch: {
             product () {
+                this.quantity = 1
                 this.sizeSelected = this.product.availableSizes[0]
             }
         },
@@ -86,13 +87,12 @@
                     price: product.price,
                     image: require('_img/product.jpg'),
                     quantity: this.quantity,
-                    price_coin: this.price_coin,
-                    price_cents: this.price_cents,
                     description: product.description,
-                    currencyFormat: product.currencyFormat,
-                    price_installments: this.price_installments
+                    currencyFormat: product.currencyFormat
                 }
                 this.$store.dispatch('setProductCart', data)
+                this.quantity = 1
+                this.sizeSelected = this.product.availableSizes[0]
             }
         }
     }
